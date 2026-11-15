@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="230 190 560 560" fill="none">
+  <title>Konain K mark</title>
+  <rect width="1000" height="1000" fill="#0A0A0B"/>
+  <g fill="#E8E6E1">
+    <path d="M302 300H402V700H302Z"/>
+    <path d="M418 470L588 300H698L418 580Z"/>
+    <path d="M455 567L588 700H698L510 512Z"/>
+  </g>
+  <rect x="698" y="240" width="60" height="60" fill="#FF4D1A"/>
+</svg>
