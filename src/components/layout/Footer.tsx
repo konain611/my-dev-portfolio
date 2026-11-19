@@ -45,7 +45,7 @@ export function Footer() {
         <div className="grid grid-cols-12 gap-x-4 gap-y-10">
           <div className="col-span-12 md:col-span-5">
             <Label>{ui.footer.rights}</Label>
-            <div className="mt-4 flex items-start justify-between gap-6">
+            <div className="mt-4 flex items-start justify-between gap-6 pr-4">
               <Link
                 href="/"
                 className="block font-display text-4xl leading-none tracking-[-0.03em] text-ink transition-colors hover:text-signal sm:text-5xl"
@@ -98,16 +98,16 @@ export function Footer() {
             <p className="mono-label py-2 text-ink">
               {profile.experience} IN PRODUCTION
             </p>
-            <p className="mono-label py-2 text-muted">
+            <p className="mono-label py-2 text-muted hover:text-ink">
               {profile.highestEducation}
             </p>
-            <p className="mono-label py-2 leading-relaxed text-muted">
+            <p className="mono-label py-2 leading-relaxed text-muted hover:text-ink">
               {profile.location.city} / {profile.location.country}
             </p>
-            <p className="mono-label py-2 text-muted">
+            <p className="mono-label py-2 text-muted hover:text-ink">
               {profile.revision}
             </p>
-            <p className="mono-label py-2 text-muted">
+            <p className="mono-label py-2 text-muted hover:text-ink">
               {profile.edition}
             </p>
           </div>
