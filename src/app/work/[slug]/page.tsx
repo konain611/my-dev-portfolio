@@ -2,19 +2,16 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArchitectureDiagram } from "@/components/ui/ArchitectureDiagram";
+import { Button } from "@/components/ui/Button";
 import { CrosshairMark } from "@/components/ui/CrosshairMark";
 import { Label } from "@/components/ui/Label";
-import { ProjectPlate } from "@/components/ui/ProjectPlate";
 import { Tag } from "@/components/ui/Tag";
 import { profile } from "@/data/profile";
-import {
-  getNextProject,
-  getProject,
-  getProjectSlugs,
-} from "@/data/projects";
+import { getNextProject, getProject, getProjectSlugs } from "@/data/projects";
 import { ui } from "@/data/ui";
 import { SITE_NAME, SITE_URL } from "@/lib/constants";
 import { buildMetadata } from "@/lib/metadata";
+import { PreviewImage } from "@/components/ui/PreviewImage";
 
 // The route awaits `params` before it can render, so navigation may block by design.
 export const instant = false;
@@ -125,6 +122,14 @@ export default async function CaseStudyPage(props: PageProps<"/work/[slug]">) {
             <p className="mt-7 max-w-2xl text-[0.9375rem] leading-relaxed text-muted">
               {project.summary}
             </p>
+            <Button
+              href={project.url}
+              external
+              cursor={ui.cursor.open}
+              className="mt-7"
+            >
+              {ui.caseStudy.visitProject}
+            </Button>
           </div>
 
           <div className="col-span-12 flex items-start justify-between gap-4 lg:col-span-3 lg:flex-col lg:items-end">
@@ -163,15 +168,36 @@ export default async function CaseStudyPage(props: PageProps<"/work/[slug]">) {
       <div className="sheet">
         <div className="grid grid-cols-12 gap-x-4 gap-y-10 py-12 md:py-16">
           <div className="col-span-12 lg:col-span-8">
-            <ProjectPlate project={project} variant="hero" />
+            <div className="aspect-video overflow-hidden border border-line bg-surface hover:border-signal ">
+              <a
+                href={project.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block h-full w-full"
+                data-cursor={ui.cursor.visit}
+              >
+                <PreviewImage
+                  src={`https://api.microlink.io/?url=${encodeURIComponent(
+                    project.url,
+                  )}&screenshot=true&meta=false&embed=screenshot.url&viewport.width=1280&viewport.height=720`}
+                  alt={`${project.name} preview`}
+                />
+              </a>
+            </div>
             <div className="mt-3 flex items-center justify-between gap-4">
-              <span className="mono-label text-muted">
-                {`FIG. ${project.index} / ${project.name}`}
+              <span className="mono-label shrink-0 text-muted">
+                {ui.caseStudy.livePreview}
               </span>
-              <span className="mono-label text-muted">
-                {project.category.toUpperCase()}
+              <span
+                className="mono-label min-w-0 truncate text-muted"
+                title={project.url}
+              >
+                {project.url}
               </span>
             </div>
+            <p className="mono-label mt-2 text-muted">
+              {ui.caseStudy.previewNote}
+            </p>
           </div>
 
           <div className="col-span-12 lg:col-span-4">
@@ -271,7 +297,9 @@ export default async function CaseStudyPage(props: PageProps<"/work/[slug]">) {
         <div className="border-t border-line py-8 md:py-10">
           <div className="flex items-center justify-between gap-4">
             <Label>{ui.caseStudy.nextProject}</Label>
-            <span className="mono-label text-muted">{ui.caseStudy.endOfFile}</span>
+            <span className="mono-label text-muted">
+              {ui.caseStudy.endOfFile}
+            </span>
           </div>
 
           <Link
