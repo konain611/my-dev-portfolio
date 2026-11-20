@@ -10,19 +10,36 @@ interface LedgerRowProps {
   project: Project;
   active: boolean;
   onActivate: (project: Project) => void;
+  onDeactivate: (project: Project) => void;
 }
 
-export function LedgerRow({ project, active, onActivate }: LedgerRowProps) {
+export function LedgerRow({
+  project,
+  active,
+  onActivate,
+  onDeactivate,
+}: LedgerRowProps) {
   return (
     <Link
       href={`/work/${project.slug}`}
       data-cursor={ui.cursor.view}
-      onMouseEnter={() => onActivate(project)}
+      onPointerEnter={() => onActivate(project)}
+      onPointerLeave={() => onDeactivate(project)}
+      onContextMenu={(event) => {
+        if (event.button !== 2) return;
+        event.preventDefault();
+        window.open(project.url, "_blank", "noopener,noreferrer");
+      }}
       onFocus={() => onActivate(project)}
+      onBlur={(event) => {
+        if (!event.currentTarget.matches(":hover")) {
+          onDeactivate(project);
+        }
+      }}
       className={cn(
         "ledger-row group relative -mx-3 block border-b border-line px-3 py-6 md:py-8",
-        "hover:bg-ink hover:text-paper focus-visible:bg-ink focus-visible:text-paper",
-        active && "bg-ink text-paper",
+        "hover:bg-signal hover:text-paper focus-visible:bg-ink focus-visible:text-paper",
+        active && "bg-signal text-ink",
       )}
       aria-label={`${project.name} — ${project.category}, ${project.year}`}
     >
